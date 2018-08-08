@@ -4,6 +4,7 @@ from functools import partial
 from trytond.model import ModelView, ModelSQL, fields, Unique
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval
+from trytond.transaction import Transaction
 from nereid import url_for, current_website
 from flask import json
 from babel import numbers
@@ -124,10 +125,23 @@ class Product:
                 "Please define following attributes for product %s: %s"
         })
 
+    @classmethod
+    def copy(cls, products, default=None):
+        with Transaction().set_context(_copy=True):
+            # Inject a context variable to let other methods know that
+            # control is coming from copy method.
+            return super(Product, cls).copy(products, default)
+
     def validate_attributes(self):
         """Check if product defines all the attributes specified in
         template variation attributes.
         """
+        if Transaction().context.get('_copy'):
+            # While copying, attributes are added later so first time
+            # validation will always result in error saying there are
+            # missing attributes, hence skip the validation if its coming
+            # from copy method.
+            return
         if not self.displayed_on_eshop:
             return
         required_attrs = set(
