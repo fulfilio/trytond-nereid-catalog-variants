@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<tree string="Variation Attributes" editable="bottom">
+<tree string="Required Attributes" editable="bottom">
     <field name="attribute" widget="selection"/>
     <field name="widget"/>
 </tree>
