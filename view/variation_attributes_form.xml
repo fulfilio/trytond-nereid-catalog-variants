@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<form string="Variation Attribute">
+<form string="Required Attributes">
     <label name="attribute"/>
     <field name="attribute" widget="selection"/>
     <label name="widget"/>

@@ -19,7 +19,7 @@ class Template:
     __name__ = 'product.template'
 
     variation_attributes = fields.One2Many(
-        'product.variation_attributes', 'template', 'Variation Attributes',
+        'product.variation_attributes', 'template', 'Required Attributes',
     )
 
     @classmethod
